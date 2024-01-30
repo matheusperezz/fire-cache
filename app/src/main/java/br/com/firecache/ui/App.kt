@@ -29,9 +29,7 @@ fun App(
 private fun AppScaffold(
     content: @Composable () -> Unit
 ) {
-    Scaffold {
-        Box(modifier = Modifier.padding(it)){
-            content()
-        }
+    Box {
+        content()
     }
 }
