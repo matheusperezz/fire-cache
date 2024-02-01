@@ -13,11 +13,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.firecache.data.mathBooks
 import br.com.firecache.data.models.BookCardModel
 import coil.compose.AsyncImage
@@ -38,12 +48,12 @@ import coil.compose.AsyncImage
 fun BookSection(
     title: String,
     books: List<BookCardModel>,
-    onBookClick: (BookCardModel) -> Unit = {}
+    onBookClick: (BookCardModel) -> Unit = {},
+    onArrowClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -52,10 +62,14 @@ fun BookSection(
                 .fillMaxWidth()
                 .padding(4.dp)
         ) {
-            Text(text = title)
+            Text(
+                text = title,
+                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(start = 8.dp)
+            )
 
-            Button(onClick = { }) {
-                Text(text = "Ver mais")
+            IconButton(onClick = { onArrowClick() }) {
+                Icon(Icons.Filled.ArrowForward, null)
             }
         }
 
@@ -66,7 +80,7 @@ fun BookSection(
             }
 
             items(books) {
-                BookCard(book = it, onBookClick = { onBookClick(it) })
+                BookCard(book = it, onBookClick = { book -> onBookClick(book) })
                 Spacer(modifier = Modifier.size(12.dp))
             }
 
@@ -108,7 +122,9 @@ fun BookCard(
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier.padding(8.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
             ) {
 
                 BookText(
@@ -135,11 +151,11 @@ fun BookCard(
 
 @Composable
 fun BookText(
+    modifier: Modifier = Modifier,
     text: String,
     fontStyle: FontStyle = FontStyle.Normal,
     fontWeight: FontWeight = FontWeight.Normal,
     maxLines: Int = 1,
-    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
@@ -150,6 +166,22 @@ fun BookText(
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
         modifier = modifier.fillMaxWidth()
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BookListTopBar(
+    title: String
+) {
+    TopAppBar(
+        title = { Text(text = title, style = TextStyle(
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontSize = 24.sp
+        )) },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+        )
     )
 }
 
