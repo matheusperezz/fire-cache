@@ -5,14 +5,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import br.com.firecache.data.models.BookCardModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookDao {
 
     @Query("SELECT * FROM BookCardModel")
-    suspend fun fetchAll(): List<BookCardModel>
+    fun fetchAll(): Flow<List<BookCardModel>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(book: BookCardModel)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(book: BookCardModel)
 
 }

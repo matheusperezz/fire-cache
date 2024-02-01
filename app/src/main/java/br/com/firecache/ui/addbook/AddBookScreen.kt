@@ -1,4 +1,4 @@
-package br.com.firecache.ui.screens
+package br.com.firecache.ui.addbook
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

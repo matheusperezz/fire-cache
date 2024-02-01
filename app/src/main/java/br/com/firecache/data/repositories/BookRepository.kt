@@ -13,9 +13,7 @@ interface BookRepository {
 class BookRepositoryImpl(
     private val bookDao: BookDao
 ): BookRepository {
-    override suspend fun fetchAll(): Flow<List<BookCardModel>> {
-        return flowOf(bookDao.fetchAll())
-    }
+    override suspend fun fetchAll(): Flow<List<BookCardModel>> = bookDao.fetchAll()
 
     override suspend fun insert(book: BookCardModel) {
         bookDao.insert(book)

@@ -1,4 +1,4 @@
-package br.com.firecache.ui.components
+package br.com.firecache.ui.bookList
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,18 +15,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.firecache.data.mathBooks
 import br.com.firecache.data.models.BookCardModel
+import br.com.firecache.data.models.Genre
 import coil.compose.AsyncImage
 
 @Composable
@@ -134,7 +128,7 @@ fun BookCard(
                 )
 
                 BookText(
-                    text = "${book.genre} - ${book.topic}",
+                    text = book.topic,
                     fontWeight = FontWeight.Light,
                     fontStyle =
                     FontStyle.Italic
@@ -169,22 +163,6 @@ fun BookText(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BookListTopBar(
-    title: String
-) {
-    TopAppBar(
-        title = { Text(text = title, style = TextStyle(
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 24.sp
-        )) },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-        )
-    )
-}
-
 @Preview
 @Composable
 private fun BookCardPreview() {
@@ -194,7 +172,7 @@ private fun BookCardPreview() {
         author = "Eizzel",
         imageUrl = "https://m.media-amazon.com/images/I/71KGGRF6WTL._SL1403_.jpg",
         topic = "Funções",
-        genre = "Matemática"
+        genreId = "1"
     )
     BookCard(book = bookModel)
 }

@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import br.com.firecache.ui.screens.AddBookScreen
+import br.com.firecache.ui.addbook.AddBookScreen
 
 const val ADD_BOOK_ROUTE = "add_book"
 

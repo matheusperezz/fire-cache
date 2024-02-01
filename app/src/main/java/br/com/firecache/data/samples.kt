@@ -9,7 +9,7 @@ val mathBooks = listOf(
         author = "Eizzel",
         imageUrl = "https://m.media-amazon.com/images/I/71KGGRF6WTL._SL1403_.jpg",
         topic = "Funções",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "2",
@@ -17,7 +17,7 @@ val mathBooks = listOf(
         author = "Howard Anton",
         imageUrl = "https://m.media-amazon.com/images/I/81BE-sfcqQL._SL1500_.jpg",
         topic = "Álgebra Linear",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "3",
@@ -25,7 +25,7 @@ val mathBooks = listOf(
         author = "James Stewart",
         imageUrl = "https://m.media-amazon.com/images/I/81SuEoiJXlL._SL1500_.jpg",
         topic = "Cálculo",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "4",
@@ -33,7 +33,7 @@ val mathBooks = listOf(
         author = "Paulo Boulos",
         imageUrl = "https://m.media-amazon.com/images/I/81JgPxz-T8L._SL1500_.jpg",
         topic = "Geometria",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "5",
@@ -41,7 +41,7 @@ val mathBooks = listOf(
         author = "John E. Freund",
         imageUrl = "https://m.media-amazon.com/images/I/91bjQ9Vz4VL._SL1500_.jpg",
         topic = "Estatística",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "6",
@@ -49,7 +49,7 @@ val mathBooks = listOf(
         author = "Kléber Aderaldo Benatti",
         imageUrl = "https://m.media-amazon.com/images/I/81o+yd1sj2L._SL1500_.jpg",
         topic = "Teoria dos Números",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "7",
@@ -57,7 +57,7 @@ val mathBooks = listOf(
         author = "Carlos Gomes",
         imageUrl = "https://m.media-amazon.com/images/I/61IB4OfYOPL._SL1090_.jpg",
         topic = "Matemática Discreta",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "8",
@@ -65,7 +65,7 @@ val mathBooks = listOf(
         author = "Gerald B. Folland",
         imageUrl = "https://m.media-amazon.com/images/I/71vr4blWnuL._SL1360_.jpg",
         topic = "Análise Matemática",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "9",
@@ -73,7 +73,7 @@ val mathBooks = listOf(
         author = "Manfredo P Do Carmo",
         imageUrl = "https://m.media-amazon.com/images/I/8122EMwf8pL._SL1500_.jpg",
         topic = "Geometria",
-        genre = "Matemática"
+        genreId = "1"
     ),
     BookCardModel(
         id = "10",
@@ -81,6 +81,6 @@ val mathBooks = listOf(
         author = "Gilberto Francisco Loibel",
         imageUrl = "https://m.media-amazon.com/images/I/71YvQi190mL._SL1500_.jpg",
         topic = "Topologia",
-        genre = "Matemática"
+        genreId = "1"
     )
 )
