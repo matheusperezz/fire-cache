@@ -3,6 +3,7 @@ package br.com.firecache.data.models
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(
     foreignKeys = [
@@ -15,7 +16,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class BookCardModel(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val title: String,
     val author: String,
     val imageUrl: String,

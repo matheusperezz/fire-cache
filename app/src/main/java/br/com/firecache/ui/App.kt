@@ -7,9 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import br.com.firecache.ui.navigation.BottomBarNavigation
 import br.com.firecache.ui.navigation.FireNavHost
 
 @Composable
@@ -19,17 +21,31 @@ fun App(
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    AppScaffold {
+    AppStateless(navController = navHostController, currentDestination = currentDestination) {
         FireNavHost(navHostController = navHostController)
     }
 
 }
 
 @Composable
-private fun AppScaffold(
+fun AppStateless(
+    navController: NavHostController,
+    currentDestination: NavDestination?,
+    isShowBottomBar: Boolean = false,
+    isShowTopBar: Boolean = false,
+    isShowFab: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    Box {
-        content()
+    Scaffold(
+        bottomBar = {
+            BottomBarNavigation(
+                currentDestinantion = currentDestination,
+                navController = navController
+            )
+        },
+    ) {
+        Box(modifier = Modifier.padding(it)) {
+            content()
+        }
     }
 }

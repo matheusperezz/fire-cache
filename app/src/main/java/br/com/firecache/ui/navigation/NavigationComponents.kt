@@ -1,4 +1,4 @@
-package br.com.firecache.ui.bookList
+package br.com.firecache.ui.navigation
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookListTopBar(
+fun FirecacheTopBar(
     title: String
 ) {
     TopAppBar(
@@ -39,7 +39,7 @@ fun BookListTopBar(
 }
 
 @Composable
-fun BookListFloatingActionButton(
+fun FirecacheFab(
     text: String,
     icon: ImageVector = Icons.Filled.Add,
     onClick: () -> Unit = {}
