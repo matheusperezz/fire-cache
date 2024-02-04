@@ -4,8 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import br.com.firecache.ui.addbook.AddBookScreen
-import br.com.firecache.ui.genres.GenreListScreen
+import br.com.firecache.ui.genreList.GenreListScreen
 
 const val GENRE_LIST_ROUTE = "genre_list"
 

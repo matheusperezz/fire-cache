@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import br.com.firecache.ui.genres.CreateGenreScreen
+import br.com.firecache.ui.createGenre.CreateGenreScreen
 
 const val CREATE_GENRE_ROUTE = "create_genre"
 

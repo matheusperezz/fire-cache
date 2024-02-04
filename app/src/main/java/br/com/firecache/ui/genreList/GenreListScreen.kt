@@ -1,4 +1,4 @@
-package br.com.firecache.ui.genres
+package br.com.firecache.ui.genreList
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
