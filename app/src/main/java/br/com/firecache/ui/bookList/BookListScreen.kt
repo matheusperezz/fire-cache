@@ -28,9 +28,7 @@ fun BookListScreen(
 
     Scaffold(
         floatingActionButton = {
-            FirecacheFab(text = "Adicionar livro", onClick = {
-                viewModel.onAddBookClick()
-            })
+            FirecacheFab(text = "Adicionar livro", onClick = onAddBookClick)
         },
     ) {
         when (uiState){
