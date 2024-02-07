@@ -10,7 +10,9 @@ const val GENRE_LIST_ROUTE = "genre_list"
 
 fun NavGraphBuilder.genreListScreen(navHostController: NavHostController) {
     composable(GENRE_LIST_ROUTE) {
-        GenreListScreen()
+        GenreListScreen(onAddGenreClick = {
+            navHostController.navigateToCreateGenre()
+        })
     }
 }
 

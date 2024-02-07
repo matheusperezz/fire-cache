@@ -10,7 +10,11 @@ const val CREATE_GENRE_ROUTE = "create_genre"
 
 fun NavGraphBuilder.createGenreScreen(navHostController: NavHostController) {
     composable(CREATE_GENRE_ROUTE) {
-        CreateGenreScreen()
+        CreateGenreScreen(
+            onSavePopNavigation = {
+                navHostController.popBackStack()
+            }
+        )
     }
 }
 

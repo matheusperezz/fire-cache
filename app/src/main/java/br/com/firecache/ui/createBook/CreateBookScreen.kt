@@ -1,10 +1,12 @@
-package br.com.firecache.ui.addbook
+package br.com.firecache.ui.createBook
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -27,8 +29,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddBookScreen(
-    viewModel: AddBookViewModel = hiltViewModel()
+fun CreateBookScreen(
+    viewModel: CreateBookViewModel = hiltViewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -86,7 +88,11 @@ fun AddBookScreen(
 
             if (uiState.isShowGenreBottomSheet) {
                 ModalBottomSheet(onDismissRequest = { viewModel.toggleBottomSheet() }) {
-                    Text(text = "Bottom sheet")
+                    LazyColumn {
+                        items(uiState.genreList){ genre ->
+                            Text(text = genre.name)
+                        }
+                    }
                 }
             }
 

@@ -1,4 +1,4 @@
-package br.com.firecache.ui.addbook
+package br.com.firecache.ui.createBook
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,10 +7,12 @@ import br.com.firecache.data.repositories.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class AddBookFormUiState(
+data class CreateBookUiState(
     val title: String = "",
     val author: String = "",
     val imageUrl: String = "",
@@ -23,14 +25,15 @@ data class AddBookFormUiState(
 
     val selectedGenre: Genre? = null,
     val isShowGenreBottomSheet: Boolean = false,
+    val genreList: List<Genre> = emptyList()
 )
 
 @HiltViewModel
-class AddBookViewModel @Inject constructor(private val genreRepository: GenreRepository) :
+class CreateBookViewModel @Inject constructor(private val genreRepository: GenreRepository) :
     ViewModel() {
 
-    private val _uiState: MutableStateFlow<AddBookFormUiState> =
-        MutableStateFlow(AddBookFormUiState())
+    private val _uiState: MutableStateFlow<CreateBookUiState> =
+        MutableStateFlow(CreateBookUiState())
     val uiState = _uiState.stateIn(
         viewModelScope,
         SharingStarted.Eagerly,
@@ -39,6 +42,7 @@ class AddBookViewModel @Inject constructor(private val genreRepository: GenreRep
 
     init {
         setupFormFields()
+        fetchGenres()
     }
 
     fun toggleBottomSheet() {
@@ -47,7 +51,7 @@ class AddBookViewModel @Inject constructor(private val genreRepository: GenreRep
     }
 
     private fun setupFormFields() {
-        _uiState.value = AddBookFormUiState(
+        _uiState.value = CreateBookUiState(
             onTitleChange = { title -> _uiState.value = _uiState.value.copy(title = title) },
             onAuthorChange = { author -> _uiState.value = _uiState.value.copy(author = author) },
             onImageUrlChange = { imageUrl ->
@@ -55,6 +59,14 @@ class AddBookViewModel @Inject constructor(private val genreRepository: GenreRep
             },
             onTopicChange = { topic -> _uiState.value = _uiState.value.copy(topic = topic) }
         )
+    }
+
+    private fun fetchGenres(){
+        viewModelScope.launch {
+            genreRepository.fetchAllGenres().collect {
+                _uiState.value = _uiState.value.copy(genreList = it)
+            }
+        }
     }
 
 }
