@@ -1,17 +1,15 @@
 package br.com.firecache.ui.createBook
 
 import android.util.Log
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.models.BookCardModel
+import br.com.firecache.data.models.Book
 import br.com.firecache.data.models.Genre
 import br.com.firecache.data.repositories.BookRepository
 import br.com.firecache.data.repositories.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -80,7 +78,7 @@ class CreateBookViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(selectedGenre = selectedGenre)
     }
 
-    fun createBook(book: BookCardModel) {
+    fun createBook(book: Book) {
         Log.i("CREATINGBOOK", "Genre id: ${book.genreId}")
         viewModelScope.launch {
             bookRepository.insert(book)

@@ -1,9 +1,9 @@
 package br.com.firecache.data
 
-import br.com.firecache.data.models.BookCardModel
+import br.com.firecache.data.models.Book
 
 val mathBooks = listOf(
-    BookCardModel(
+    Book(
         id = "1",
         title = "Matemática Elementar 1",
         author = "Eizzel",
@@ -11,7 +11,7 @@ val mathBooks = listOf(
         topic = "Funções",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "2",
         title = "Álgebra Linear com Aplicações",
         author = "Howard Anton",
@@ -19,7 +19,7 @@ val mathBooks = listOf(
         topic = "Álgebra Linear",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "3",
         title = "Cálculo: Volume 1",
         author = "James Stewart",
@@ -27,7 +27,7 @@ val mathBooks = listOf(
         topic = "Cálculo",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "4",
         title = "Geometria Analítica: Um Tratamento Vetorial",
         author = "Paulo Boulos",
@@ -35,7 +35,7 @@ val mathBooks = listOf(
         topic = "Geometria",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "5",
         title = "Estatística Aplicada: Economia, Administração e Contabilidade",
         author = "John E. Freund",
@@ -43,7 +43,7 @@ val mathBooks = listOf(
         topic = "Estatística",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "6",
         title = "Teoria dos Números",
         author = "Kléber Aderaldo Benatti",
@@ -51,7 +51,7 @@ val mathBooks = listOf(
         topic = "Teoria dos Números",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "7",
         title = "Matemática discreta: Conjuntos, recorrências, combinatória e probabilidade - Volume 1",
         author = "Carlos Gomes",
@@ -59,7 +59,7 @@ val mathBooks = listOf(
         topic = "Matemática Discreta",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "8",
         title = "Real Analysis: Modern Techniques and Their Applications: 40",
         author = "Gerald B. Folland",
@@ -67,7 +67,7 @@ val mathBooks = listOf(
         topic = "Análise Matemática",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "9",
         title = "Differential Geometry of Curves and Surfaces: Revised and Updated Second Edition",
         author = "Manfredo P Do Carmo",
@@ -75,7 +75,7 @@ val mathBooks = listOf(
         topic = "Geometria",
         genreId = "1"
     ),
-    BookCardModel(
+    Book(
         id = "10",
         title = "Introdução à topologia",
         author = "Gilberto Francisco Loibel",

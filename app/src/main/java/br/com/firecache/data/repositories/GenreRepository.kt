@@ -1,14 +1,14 @@
 package br.com.firecache.data.repositories
 
 import br.com.firecache.data.dao.GenreDao
-import br.com.firecache.data.models.BookCardModel
+import br.com.firecache.data.models.Book
 import br.com.firecache.data.models.Genre
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface GenreRepository {
     fun fetchAllGenres(): Flow<List<Genre>>
-    fun fetchBooksFromGenre(genreId: String): Flow<List<BookCardModel>>
+    fun fetchBooksFromGenre(genreId: String): Flow<List<Book>>
     fun findGenreById(genreId: String): Flow<Genre>
     suspend fun insert(genre: Genre)
 }
@@ -20,7 +20,7 @@ class GenreRepositoryImpl @Inject constructor(
         return genreDao.fetchAllGenres()
     }
 
-    override fun fetchBooksFromGenre(genreId: String): Flow<List<BookCardModel>> {
+    override fun fetchBooksFromGenre(genreId: String): Flow<List<Book>> {
         return genreDao.fetchBooksFromGenre(genreId)
     }
 

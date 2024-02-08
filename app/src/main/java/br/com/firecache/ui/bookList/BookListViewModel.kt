@@ -2,9 +2,7 @@ package br.com.firecache.ui.bookList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.mathBooks
-import br.com.firecache.data.models.BookCardModel
-import br.com.firecache.data.models.Genre
+import br.com.firecache.data.models.Book
 import br.com.firecache.data.repositories.BookRepository
 import br.com.firecache.data.repositories.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 sealed class BookListUiState {
     object Loading : BookListUiState()
-    data class Success(val books: List<BookCardModel>) : BookListUiState()
+    data class Success(val books: List<Book>) : BookListUiState()
     data class Error(val error: Throwable) : BookListUiState()
     object Empty : BookListUiState()
 }
@@ -23,7 +21,6 @@ sealed class BookListUiState {
 @HiltViewModel
 class BookListViewModel @Inject constructor(
     private val bookRepository: BookRepository,
-    private val genreRepository: GenreRepository
 ) : ViewModel() {
     private var currentUiStateJob: Job? = null
     private val _uiState = MutableStateFlow<BookListUiState>(
@@ -53,19 +50,9 @@ class BookListViewModel @Inject constructor(
         }
     }
 
-    fun onAddBookClick() {
-
-        val rand = (0..mathBooks.size).random()
-
-        val book = BookCardModel(
-            title = mathBooks[rand].title,
-            author = mathBooks[rand].author,
-            genreId = "9d9cfbd2-d1e6-484c-9eca-fb95eb91bb63",
-            imageUrl = mathBooks[rand].imageUrl,
-            topic = mathBooks[rand].topic,
-        )
+    fun deleteBook(book: Book) {
         viewModelScope.launch {
-            bookRepository.insert(book)
+            bookRepository.delete(book)
         }
     }
 }

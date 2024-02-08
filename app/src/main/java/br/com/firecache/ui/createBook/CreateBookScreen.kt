@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import br.com.firecache.data.models.BookCardModel
+import br.com.firecache.data.models.Book
 import br.com.firecache.ui.components.ModalBottomGenres
 import br.com.firecache.ui.components.RowTextWithIcon
 import br.com.firecache.ui.components.StyledOutlinedTextField
@@ -91,7 +91,7 @@ fun CreateBookScreen(
             Button(onClick = {
                 uiState.selectedGenre?.let { notNullGenre ->
                     viewModel.createBook(
-                        BookCardModel(
+                        Book(
                             title = uiState.title,
                             author = uiState.author,
                             imageUrl = uiState.imageUrl,

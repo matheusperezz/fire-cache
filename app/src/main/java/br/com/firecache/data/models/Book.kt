@@ -15,7 +15,7 @@ import java.util.UUID
         )
     ]
 )
-data class BookCardModel(
+data class Book(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val title: String,
     val author: String,

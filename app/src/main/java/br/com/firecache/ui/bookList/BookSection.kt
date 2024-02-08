@@ -1,6 +1,7 @@
 package br.com.firecache.ui.bookList
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,15 +35,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.firecache.data.mathBooks
-import br.com.firecache.data.models.BookCardModel
-import br.com.firecache.data.models.Genre
+import br.com.firecache.data.models.Book
 import coil.compose.AsyncImage
 
 @Composable
 fun BookSection(
     title: String,
-    books: List<BookCardModel>,
-    onBookClick: (BookCardModel) -> Unit = {},
+    books: List<Book>,
+    onBookClick: (Book) -> Unit = {},
+    onBookLongClick: (Book) -> Unit = {},
     onArrowClick: () -> Unit = {}
 ) {
     Column(
@@ -74,7 +75,10 @@ fun BookSection(
             }
 
             items(books) {
-                BookCard(book = it, onBookClick = { book -> onBookClick(book) })
+                BookCard(
+                    book = it,
+                    onBookClick = { book -> onBookClick(book) },
+                    onBookLongClick = { book -> onBookLongClick(book) })
                 Spacer(modifier = Modifier.size(12.dp))
             }
 
@@ -82,10 +86,12 @@ fun BookSection(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookCard(
-    book: BookCardModel,
-    onBookClick: (BookCardModel) -> Unit = {}
+    book: Book,
+    onBookClick: (Book) -> Unit = {},
+    onBookLongClick: (Book) -> Unit = {}
 ) {
     Card(
         elevation = CardDefaults.cardElevation(0.dp),
@@ -97,9 +103,10 @@ fun BookCard(
             .width(200.dp)
             .clip(RoundedCornerShape(16.dp))
             .height(366.dp)
-            .clickable {
-                onBookClick(book)
-            },
+            .combinedClickable(
+                onClick = { onBookClick(book) },
+                onLongClick = { onBookLongClick(book) }
+            ),
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -166,7 +173,7 @@ fun BookText(
 @Preview
 @Composable
 private fun BookCardPreview() {
-    val bookModel = BookCardModel(
+    val bookModel = Book(
         id = "1",
         title = "Matemática Elementar 1 - Conjuntos e funções com exercícios",
         author = "Eizzel",
