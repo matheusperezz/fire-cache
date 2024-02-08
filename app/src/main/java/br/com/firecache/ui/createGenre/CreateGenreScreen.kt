@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import br.com.firecache.ui.createBook.StyledOutlinedTextField
+import br.com.firecache.ui.components.StyledOutlinedTextField
 
 @Composable
 fun CreateGenreScreen(

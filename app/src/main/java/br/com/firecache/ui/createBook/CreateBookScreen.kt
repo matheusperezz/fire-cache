@@ -2,21 +2,13 @@ package br.com.firecache.ui.createBook
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,10 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.firecache.data.models.BookCardModel
+import br.com.firecache.ui.components.ModalBottomGenres
+import br.com.firecache.ui.components.RowTextWithIcon
+import br.com.firecache.ui.components.StyledOutlinedTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateBookScreen(
+    onSaveClick: () -> Unit = {},
     viewModel: CreateBookViewModel = hiltViewModel()
 ) {
 
@@ -66,38 +63,44 @@ fun CreateBookScreen(
                 onValueChange = uiState.onTopicChange,
                 label = "Tópico"
             )
-            if (uiState.selectedGenre == null){
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(text = "Selecione um gênero")
-                    IconButton(onClick = { viewModel.toggleBottomSheet() }) {
-                        Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-                    }
+            if (uiState.selectedGenre == null) {
+                RowTextWithIcon(text = "Selecione um gênero", icon = Icons.Filled.Add) {
+                    viewModel.toggleBottomSheet()
                 }
             } else {
-                Row {
-                    Text(text = "Gênero selecionado: ${uiState.selectedGenre!!.name}")
-                    IconButton(onClick = { viewModel.toggleBottomSheet() }) {
-                        Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
-                    }
+                RowTextWithIcon(
+                    text = "Gênero selecionado: ${uiState.selectedGenre!!.name}",
+                    icon = Icons.Filled.Edit
+                ) {
+                    viewModel.toggleBottomSheet()
                 }
             }
 
             if (uiState.isShowGenreBottomSheet) {
-                ModalBottomSheet(onDismissRequest = { viewModel.toggleBottomSheet() }) {
-                    LazyColumn {
-                        items(uiState.genreList){ genre ->
-                            Text(text = genre.name)
-                        }
-                    }
-                }
+                ModalBottomGenres(
+                    genreList = uiState.genreList,
+                    onDismiss = {
+                        viewModel.toggleBottomSheet()
+                    },
+                    onGenreSelect = { selectedGenre ->
+                        viewModel.selectGenre(selectedGenre)
+                    },
+                )
             }
 
             Button(onClick = {
-                // TODO: Add book with the corresponding data
+                uiState.selectedGenre?.let { notNullGenre ->
+                    viewModel.createBook(
+                        BookCardModel(
+                            title = uiState.title,
+                            author = uiState.author,
+                            imageUrl = uiState.imageUrl,
+                            topic = uiState.topic,
+                            genreId = notNullGenre.id
+                        )
+                    )
+                }
+                onSaveClick()
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Adicionar livro")
             }
@@ -105,18 +108,3 @@ fun CreateBookScreen(
     }
 }
 
-@Composable
-fun StyledOutlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    modifier: Modifier = Modifier
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(text = label) },
-        shape = RoundedCornerShape(25.dp),
-        modifier = modifier.fillMaxWidth()
-    )
-}

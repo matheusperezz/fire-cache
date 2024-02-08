@@ -1,8 +1,12 @@
 package br.com.firecache.ui.createBook
 
+import android.util.Log
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.firecache.data.models.BookCardModel
 import br.com.firecache.data.models.Genre
+import br.com.firecache.data.repositories.BookRepository
 import br.com.firecache.data.repositories.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +33,10 @@ data class CreateBookUiState(
 )
 
 @HiltViewModel
-class CreateBookViewModel @Inject constructor(private val genreRepository: GenreRepository) :
+class CreateBookViewModel @Inject constructor(
+    private val genreRepository: GenreRepository,
+    private val bookRepository: BookRepository
+) :
     ViewModel() {
 
     private val _uiState: MutableStateFlow<CreateBookUiState> =
@@ -61,11 +68,22 @@ class CreateBookViewModel @Inject constructor(private val genreRepository: Genre
         )
     }
 
-    private fun fetchGenres(){
+    private fun fetchGenres() {
         viewModelScope.launch {
             genreRepository.fetchAllGenres().collect {
                 _uiState.value = _uiState.value.copy(genreList = it)
             }
+        }
+    }
+
+    fun selectGenre(selectedGenre: Genre) {
+        _uiState.value = _uiState.value.copy(selectedGenre = selectedGenre)
+    }
+
+    fun createBook(book: BookCardModel) {
+        Log.i("CREATINGBOOK", "Genre id: ${book.genreId}")
+        viewModelScope.launch {
+            bookRepository.insert(book)
         }
     }
 

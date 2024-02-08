@@ -10,7 +10,7 @@ const val ADD_BOOK_ROUTE = "add_book"
 
 fun NavGraphBuilder.createBookScreen(navHostController: NavHostController) {
     composable(ADD_BOOK_ROUTE) {
-        CreateBookScreen()
+        CreateBookScreen(onSaveClick = { navHostController.popBackStack() })
     }
 }
 
