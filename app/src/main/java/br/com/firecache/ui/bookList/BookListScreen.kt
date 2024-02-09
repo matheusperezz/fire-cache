@@ -3,9 +3,15 @@ package br.com.firecache.ui.bookList
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -16,10 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.firecache.data.models.Book
+import br.com.firecache.data.models.Genre
+import br.com.firecache.ui.components.StyledOutlinedTextField
 import br.com.firecache.ui.navigation.FirecacheFab
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -31,6 +38,7 @@ fun BookListScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var isShowDialog by remember { mutableStateOf(false) }
     var selectedBook by remember { mutableStateOf<Book?>(null) }
+    var searchText by remember { mutableStateOf("") }
 
     Scaffold(
         floatingActionButton = {
@@ -47,9 +55,12 @@ fun BookListScreen(
             is BookListUiState.Success -> {
                 val books = (uiState as BookListUiState.Success).books
                 BookList(
-                    books = books,
+                    books = books.filter { it.title.contains(searchText, ignoreCase = true) },
+                    genres = (uiState as BookListUiState.Success).genres,
                     onBookClick = { },
-                    onBookLongPress = { book ->
+                    searchText = searchText,
+                    onSearchTextChange = { searchText = it },
+                    onBookLongClick = { book ->
                         selectedBook = book
                         isShowDialog = true
                     }
@@ -88,16 +99,42 @@ fun BookListScreen(
 @Composable
 fun BookList(
     books: List<Book>,
+    searchText: String,
+    genres: List<Genre>,
+    onSearchTextChange: (String) -> Unit,
     onBookClick: (Book) -> Unit = {},
-    onBookLongPress: (Book) -> Unit = {}
+    onBookLongClick: (Book) -> Unit = {}
 ) {
-    Column {
-        BookSection(
-            title = "Matemática",
-            books = books,
-            onBookClick = onBookClick,
-            onBookLongClick = onBookLongPress
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        StyledOutlinedTextField(
+            value = searchText,
+            onValueChange = onSearchTextChange,
+            label = "Pesquisar",
+            modifier = Modifier.padding(8.dp),
+            trailingIcon = {
+                Icon(
+                    Icons.Default.Search, contentDescription = null
+                )
+            }
         )
+        val booksByTopic = books.groupBy { it.genreId }
+        val genresNames = genres.associateBy { it.id }
+
+        LazyColumn {
+            items(booksByTopic.keys.toList()) { genreId ->
+                val genre = genresNames[genreId]
+                genre?.let {
+                    BookSection(
+                        title = genre.name,
+                        books = booksByTopic[genreId] ?: listOf(),
+                        onBookClick = onBookClick,
+                        onBookLongClick = onBookLongClick
+                    )
+                }
+            }
+        }
     }
 }
 

@@ -3,6 +3,7 @@ package br.com.firecache.ui.bookList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.firecache.data.models.Book
+import br.com.firecache.data.models.Genre
 import br.com.firecache.data.repositories.BookRepository
 import br.com.firecache.data.repositories.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 sealed class BookListUiState {
     object Loading : BookListUiState()
-    data class Success(val books: List<Book>) : BookListUiState()
+    data class Success(val books: List<Book>, val genres: List<Genre>) : BookListUiState()
     data class Error(val error: Throwable) : BookListUiState()
     object Empty : BookListUiState()
 }
@@ -21,6 +22,7 @@ sealed class BookListUiState {
 @HiltViewModel
 class BookListViewModel @Inject constructor(
     private val bookRepository: BookRepository,
+    private val genreRepository: GenreRepository
 ) : ViewModel() {
     private var currentUiStateJob: Job? = null
     private val _uiState = MutableStateFlow<BookListUiState>(
@@ -37,11 +39,13 @@ class BookListViewModel @Inject constructor(
         currentUiStateJob = viewModelScope.launch {
             _uiState.value = BookListUiState.Loading
             try {
-                bookRepository.fetchAll().collect {
-                    if (it.isEmpty()) {
+                bookRepository.fetchAll().collect { books ->
+                    if (books.isEmpty()) {
                         _uiState.value = BookListUiState.Empty
                     } else {
-                        _uiState.value = BookListUiState.Success(it)
+                       genreRepository.fetchAllGenres().collect { genres ->
+                           _uiState.value = BookListUiState.Success(books, genres)
+                       }
                     }
                 }
             } catch (e: Throwable) {

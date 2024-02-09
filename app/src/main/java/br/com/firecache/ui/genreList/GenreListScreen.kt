@@ -1,7 +1,9 @@
 package br.com.firecache.ui.genreList
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -29,25 +31,33 @@ fun GenreListScreen(
             FirecacheFab(text = "Adicionar gênero", onClick = onAddGenreClick)
         }
     ) {
-        when(uiState){
+        when (uiState) {
             is GenreListUiState.Loading -> {
                 Box(modifier = Modifier.padding(16.dp)) {
                     Text("Carregando...")
                 }
             }
+
             is GenreListUiState.Success -> {
                 val genres = (uiState as GenreListUiState.Success).genres
                 LazyColumn {
-                    items(genres){ genre ->
-                        Text(text = genre.name, modifier = Modifier.padding(16.dp))
+                    items(genres) { genre ->
+                        Text(
+                            text = genre.name,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                                .clickable { })
                     }
                 }
             }
+
             is GenreListUiState.Error -> {
                 Box(modifier = Modifier.padding(16.dp)) {
                     Text("Erro ao carregar os gêneros")
                 }
             }
+
             is GenreListUiState.Empty -> {
                 Box(modifier = Modifier.padding(16.dp)) {
                     Text("Nenhum gênero encontrado")
