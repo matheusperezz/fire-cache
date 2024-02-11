@@ -57,8 +57,8 @@ fun BookListScreen(
             is BookListUiState.Success -> {
                 val books = (uiState as BookListUiState.Success).books
                 BookList(
-                    books = books.filter { it.title.contains(searchText, ignoreCase = true) },
-                    genres = (uiState as BookListUiState.Success).genres,
+                    // books = books.filter { it.title.contains(searchText, ignoreCase = true) },
+                    books = books,
                     onBookClick = { },
                     searchText = searchText,
                     onSearchTextChange = { searchText = it },
@@ -110,7 +110,6 @@ fun BookListScreen(
 fun BookList(
     books: List<Book>,
     searchText: String,
-    genres: List<Genre>,
     onSearchTextChange: (String) -> Unit,
     onBookClick: (Book) -> Unit = {},
     onBookLongClick: (Book) -> Unit = {}
@@ -129,20 +128,14 @@ fun BookList(
                 )
             }
         )
-        val booksByTopic = books.groupBy { it.genreId }
-        val genresNames = genres.associateBy { it.id }
 
         LazyColumn {
-            items(booksByTopic.keys.toList()) { genreId ->
-                val genre = genresNames[genreId]
-                genre?.let {
-                    BookSection(
-                        title = genre.name,
-                        books = booksByTopic[genreId] ?: listOf(),
-                        onBookClick = onBookClick,
-                        onBookLongClick = onBookLongClick
-                    )
-                }
+            items(books.filter { it.title.contains(searchText, ignoreCase = true) }) { book ->
+                BookCard(
+                    book = book,
+                    onBookClick = onBookClick,
+                    onBookLongClick = onBookLongClick
+                )
             }
         }
     }

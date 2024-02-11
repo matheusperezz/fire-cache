@@ -9,12 +9,14 @@ import br.com.firecache.data.repositories.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class BookListUiState {
     object Loading : BookListUiState()
-    data class Success(val books: List<Book>, val genres: List<Genre>) : BookListUiState()
+    data class Success(val books: List<Book>) : BookListUiState()
     data class Error(val error: Throwable) : BookListUiState()
     object Empty : BookListUiState()
 }
@@ -24,6 +26,7 @@ class BookListViewModel @Inject constructor(
     private val bookRepository: BookRepository,
     private val genreRepository: GenreRepository
 ) : ViewModel() {
+
     private var currentUiStateJob: Job? = null
     private val _uiState = MutableStateFlow<BookListUiState>(
         BookListUiState.Loading
@@ -43,9 +46,7 @@ class BookListViewModel @Inject constructor(
                     if (books.isEmpty()) {
                         _uiState.value = BookListUiState.Empty
                     } else {
-                       genreRepository.fetchAllGenres().collect { genres ->
-                           _uiState.value = BookListUiState.Success(books, genres)
-                       }
+                        _uiState.value = BookListUiState.Success(books)
                     }
                 }
             } catch (e: Throwable) {

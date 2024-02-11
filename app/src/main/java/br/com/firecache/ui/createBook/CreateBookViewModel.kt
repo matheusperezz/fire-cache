@@ -79,7 +79,6 @@ class CreateBookViewModel @Inject constructor(
     }
 
     fun createBook(book: Book) {
-        Log.i("CREATINGBOOK", "Genre id: ${book.genreId}")
         viewModelScope.launch {
             bookRepository.insert(book)
         }
