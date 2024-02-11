@@ -1,13 +1,16 @@
 package br.com.firecache.ui.createBook
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -15,6 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,8 +27,11 @@ import br.com.firecache.data.models.Book
 import br.com.firecache.ui.components.ModalBottomGenres
 import br.com.firecache.ui.components.RowTextWithIcon
 import br.com.firecache.ui.components.StyledOutlinedTextField
+import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateBookScreen(
     onSaveClick: () -> Unit = {},
@@ -53,6 +61,9 @@ fun CreateBookScreen(
                 onValueChange = uiState.onAuthorChange,
                 label = "Autor"
             )
+            // Make a container to load image and show it
+            BookImage(imageUrl = uiState.imageUrl)
+
             StyledOutlinedTextField(
                 value = uiState.imageUrl,
                 onValueChange = uiState.onImageUrlChange,
@@ -108,3 +119,28 @@ fun CreateBookScreen(
     }
 }
 
+@Composable
+fun BookImage(imageUrl: String) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(imageUrl)
+            .build(),
+        contentDescription = "Book image",
+        modifier = Modifier.size(200.dp),
+        contentScale = ContentScale.Fit,
+        loading = {
+            CircularProgressIndicator(
+                modifier = Modifier.size(50.dp)
+            )
+        },
+        error = {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Imagem não encontrada.")
+            }
+        }
+
+    )
+}

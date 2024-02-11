@@ -8,9 +8,8 @@ import br.com.firecache.ui.theme.FireCacheTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /*
-*   TODO: Fazer a listagem de seções
-*   TODO: Fazer a listagem de livros por seção
-*   TODO: Implementar o formulário de adição de livros
+*   TODO: Implementar a imagem no formulário de adição de livros, de preferencia
+*    um botão para carregar a imagem em algum container
 * */
 
 @AndroidEntryPoint
