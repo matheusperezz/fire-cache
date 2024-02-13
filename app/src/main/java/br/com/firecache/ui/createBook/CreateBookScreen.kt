@@ -61,8 +61,8 @@ fun CreateBookScreen(
                 onValueChange = uiState.onAuthorChange,
                 label = "Autor"
             )
-            // Make a container to load image and show it
-            BookImage(imageUrl = uiState.imageUrl)
+
+            BookImage(imageUrl = uiState.imageUrl, modifier = Modifier.size(200.dp))
 
             StyledOutlinedTextField(
                 value = uiState.imageUrl,
@@ -120,13 +120,13 @@ fun CreateBookScreen(
 }
 
 @Composable
-fun BookImage(imageUrl: String) {
+fun BookImage(imageUrl: String, modifier: Modifier = Modifier) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
             .build(),
         contentDescription = "Book image",
-        modifier = Modifier.size(200.dp),
+        modifier = modifier,
         contentScale = ContentScale.Fit,
         loading = {
             CircularProgressIndicator(
@@ -141,6 +141,5 @@ fun BookImage(imageUrl: String) {
                 Text(text = "Imagem não encontrada.")
             }
         }
-
     )
 }

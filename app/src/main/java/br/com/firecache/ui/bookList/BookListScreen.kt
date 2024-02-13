@@ -35,6 +35,7 @@ import br.com.firecache.ui.navigation.FirecacheFab
 @Composable
 fun BookListScreen(
     viewModel: BookListViewModel = hiltViewModel(),
+    onBookClick: (String) -> Unit = {},
     onAddBookClick: () -> Unit = {},
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -57,9 +58,10 @@ fun BookListScreen(
             is BookListUiState.Success -> {
                 val books = (uiState as BookListUiState.Success).books
                 BookList(
-                    // books = books.filter { it.title.contains(searchText, ignoreCase = true) },
-                    books = books,
-                    onBookClick = { },
+                    books = books.filter { it.title.contains(searchText, ignoreCase = true) },
+                    onBookClick = {
+                        onBookClick(it)
+                    },
                     searchText = searchText,
                     onSearchTextChange = { searchText = it },
                     onBookLongClick = { book ->
@@ -111,7 +113,7 @@ fun BookList(
     books: List<Book>,
     searchText: String,
     onSearchTextChange: (String) -> Unit,
-    onBookClick: (Book) -> Unit = {},
+    onBookClick: (String) -> Unit = {},
     onBookLongClick: (Book) -> Unit = {}
 ) {
     Column(

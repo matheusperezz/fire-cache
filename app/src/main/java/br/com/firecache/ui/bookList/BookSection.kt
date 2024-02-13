@@ -42,7 +42,7 @@ import coil.compose.AsyncImage
 fun BookSection(
     title: String,
     books: List<Book>,
-    onBookClick: (Book) -> Unit = {},
+    onBookClick: (String) -> Unit = {},
     onBookLongClick: (Book) -> Unit = {},
     onArrowClick: () -> Unit = {}
 ) {
@@ -90,7 +90,7 @@ fun BookSection(
 @Composable
 fun BookCard(
     book: Book,
-    onBookClick: (Book) -> Unit = {},
+    onBookClick: (String) -> Unit = {},
     onBookLongClick: (Book) -> Unit = {}
 ) {
     Card(
@@ -104,7 +104,7 @@ fun BookCard(
             .clip(RoundedCornerShape(16.dp))
             .height(366.dp)
             .combinedClickable(
-                onClick = { onBookClick(book) },
+                onClick = { onBookClick(book.id) },
                 onLongClick = { onBookLongClick(book) }
             ),
     ) {
