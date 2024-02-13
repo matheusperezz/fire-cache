@@ -100,34 +100,33 @@ fun BookCard(
             contentColor = Color.Black
         ),
         modifier = Modifier
-            .width(200.dp)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .height(366.dp)
+            .padding(8.dp)
+            .height(250.dp)
             .combinedClickable(
                 onClick = { onBookClick(book.id) },
                 onLongClick = { onBookLongClick(book) }
             ),
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
         ) {
-            AsyncImage(
-                model = book.imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(RoundedCornerShape(16.dp))
-            )
+            Column {
+                AsyncImage(
+                    model = book.imageUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .height(250.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                )
+            }
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-            ) {
-
+            Column {
                 BookText(
                     text = book.title,
                     fontWeight = FontWeight.Bold,
@@ -146,7 +145,6 @@ fun BookCard(
                 )
             }
         }
-
     }
 }
 
