@@ -11,7 +11,7 @@ const val BOOK_LIST_ROUTE = "book_list"
 fun NavGraphBuilder.bookListScreen(navHostController: NavHostController) {
     composable(BOOK_LIST_ROUTE) {
         BookListScreen(
-            onAddBookClick = { navHostController.navigateToAddBook() },
+            onAddBookClick = { navHostController.navigateToAddBook(null) },
             onBookClick = { bookId -> navHostController.navigateToBookDetails(bookId) }
         )
     }

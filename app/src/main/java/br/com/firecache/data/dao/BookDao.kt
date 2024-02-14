@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import br.com.firecache.data.models.Book
 import kotlinx.coroutines.flow.Flow
 
@@ -22,4 +23,7 @@ interface BookDao {
 
     @Query("SELECT * FROM Book WHERE id = :bookId")
     fun fetchById(bookId: String): Flow<Book?>
+
+    @Update
+    fun update(book: Book)
 }

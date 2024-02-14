@@ -7,21 +7,24 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import br.com.firecache.ui.book.bookDetails.BookDetailsScreen
-import br.com.firecache.ui.book.bookList.BookListScreen
 
 const val BOOK_DETAILS_ROUTE = "book_details"
-const val BOOK_DETAILS_ARGUMENT_KEY = "id"
+const val BOOK_ARGUMENT_KEY_ID = "id"
 
 fun NavGraphBuilder.bookDetailsScreen(navHostController: NavHostController) {
     composable(
-        route = "$BOOK_DETAILS_ROUTE/{$BOOK_DETAILS_ARGUMENT_KEY}",
+        route = "$BOOK_DETAILS_ROUTE/{$BOOK_ARGUMENT_KEY_ID}",
         arguments = listOf(
-            navArgument(BOOK_DETAILS_ARGUMENT_KEY) { type = NavType.StringType }
+            navArgument(BOOK_ARGUMENT_KEY_ID) { type = NavType.StringType }
         )
     ){ navBackStackEntry ->
-        val bookId = navBackStackEntry.arguments?.getString(BOOK_DETAILS_ARGUMENT_KEY)
+        val bookId = navBackStackEntry.arguments?.getString(BOOK_ARGUMENT_KEY_ID)
         bookId?.let { notNullBookId ->
-            BookDetailsScreen(bookId = notNullBookId, navHostController = navHostController)
+            BookDetailsScreen(
+                bookId = notNullBookId,
+                navHostController = navHostController,
+                onEditClick = { bookId -> navHostController.navigateToAddBook(bookId) }
+            )
         }
     }
 }

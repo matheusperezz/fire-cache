@@ -28,6 +28,7 @@ import br.com.firecache.data.models.Book
 
 @Composable
 fun BookDetailsScreen(
+    onEditClick: (String) -> Unit = {},
     viewModel: BookDetailsViewModel = hiltViewModel(),
     navHostController: NavHostController,
     bookId: String,
@@ -39,7 +40,10 @@ fun BookDetailsScreen(
     Scaffold(
         floatingActionButton = {
             if (isShowingFab) {
-                FloatingActionButton(onClick = { editBook() }) {
+                FloatingActionButton(onClick = {
+                    val book = (uiState as BookDetailsUiState.Success).book
+                    onEditClick(book.id)
+                }) {
                     Icon(imageVector = Icons.Default.Edit, contentDescription = null)
                 }
             }
@@ -111,8 +115,4 @@ fun BookInfo(
         }
 
     }
-}
-
-private fun editBook() {
-    // TODO
 }

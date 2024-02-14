@@ -8,7 +8,7 @@ import br.com.firecache.ui.theme.FireCacheTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /*
-*   TODO: Implementar a tela de detalhes do livro
+*   TODO: Erro ao carregar a tela de Update, os campos não estao se atualizando
 * */
 
 @AndroidEntryPoint

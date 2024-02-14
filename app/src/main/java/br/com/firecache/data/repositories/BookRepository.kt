@@ -12,6 +12,7 @@ interface BookRepository {
     suspend fun insert(book: Book)
 
     suspend fun delete(book: Book)
+    suspend fun update(book: Book)
 }
 
 @Singleton
@@ -29,6 +30,10 @@ class BookRepositoryImpl @Inject constructor(
 
     override suspend fun delete(book: Book) {
         bookDao.delete(book)
+    }
+
+    override suspend fun update(book: Book) {
+        bookDao.update(book)
     }
 
 }
