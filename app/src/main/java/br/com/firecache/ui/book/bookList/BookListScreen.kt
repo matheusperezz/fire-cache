@@ -1,4 +1,4 @@
-package br.com.firecache.ui.bookList
+package br.com.firecache.ui.book.bookList
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package br.com.firecache.ui.createBook
+package br.com.firecache.ui.book.createBook
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

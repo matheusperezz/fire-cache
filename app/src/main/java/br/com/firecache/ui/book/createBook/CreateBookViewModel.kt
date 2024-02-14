@@ -1,4 +1,4 @@
-package br.com.firecache.ui.createBook
+package br.com.firecache.ui.book.createBook
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

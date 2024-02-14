@@ -1,4 +1,4 @@
-package br.com.firecache.ui.bookList
+package br.com.firecache.ui.book.bookList
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable

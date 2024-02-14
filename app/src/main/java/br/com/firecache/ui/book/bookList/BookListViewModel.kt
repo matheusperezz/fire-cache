@@ -1,4 +1,4 @@
-package br.com.firecache.ui.bookList
+package br.com.firecache.ui.book.bookList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -8,6 +8,7 @@ import javax.inject.Singleton
 
 interface BookRepository {
     fun fetchAll(): Flow<List<Book>>
+    fun fetchById(bookId: String): Flow<Book?>
     suspend fun insert(book: Book)
 
     suspend fun delete(book: Book)
@@ -18,6 +19,9 @@ class BookRepositoryImpl @Inject constructor(
     private val bookDao: BookDao
 ): BookRepository {
     override fun fetchAll(): Flow<List<Book>> = bookDao.fetchAll()
+    override fun fetchById(bookId: String): Flow<Book?> {
+        return bookDao.fetchById(bookId)
+    }
 
     override suspend fun insert(book: Book) {
         bookDao.insert(book)

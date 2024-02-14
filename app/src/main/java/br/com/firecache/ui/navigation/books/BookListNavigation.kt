@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import br.com.firecache.ui.bookList.BookListScreen
+import br.com.firecache.ui.book.bookList.BookListScreen
 
 const val BOOK_LIST_ROUTE = "book_list"
 

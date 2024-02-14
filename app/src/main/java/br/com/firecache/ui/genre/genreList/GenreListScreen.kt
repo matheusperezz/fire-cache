@@ -1,4 +1,4 @@
-package br.com.firecache.ui.genreList
+package br.com.firecache.ui.genre.genreList
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable

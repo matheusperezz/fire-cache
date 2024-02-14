@@ -19,4 +19,7 @@ interface BookDao {
 
     @Delete
     suspend fun delete(book: Book)
+
+    @Query("SELECT * FROM Book WHERE id = :bookId")
+    fun fetchById(bookId: String): Flow<Book?>
 }

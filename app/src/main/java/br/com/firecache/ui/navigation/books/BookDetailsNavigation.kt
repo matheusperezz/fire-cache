@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import br.com.firecache.ui.bookDetails.BookDetailsScreen
-import br.com.firecache.ui.bookList.BookListScreen
+import br.com.firecache.ui.book.bookDetails.BookDetailsScreen
+import br.com.firecache.ui.book.bookList.BookListScreen
 
 const val BOOK_DETAILS_ROUTE = "book_details"
 const val BOOK_DETAILS_ARGUMENT_KEY = "id"

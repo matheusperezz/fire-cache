@@ -1,4 +1,4 @@
-package br.com.firecache.ui.createGenre
+package br.com.firecache.ui.genre.createGenre
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
