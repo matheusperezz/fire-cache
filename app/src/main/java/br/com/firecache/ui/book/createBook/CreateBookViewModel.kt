@@ -1,6 +1,5 @@
 package br.com.firecache.ui.book.createBook
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.firecache.data.models.Book
@@ -19,11 +18,13 @@ data class CreateBookUiState(
     val author: String = "",
     val imageUrl: String = "",
     val topic: String = "",
+    val comments: String = "",
 
     val onTitleChange: (String) -> Unit = {},
     val onAuthorChange: (String) -> Unit = {},
     val onImageUrlChange: (String) -> Unit = {},
     val onTopicChange: (String) -> Unit = {},
+    val onCommentsChange: (String) -> Unit = {},
 
     val selectedGenre: Genre? = null,
     val isShowGenreBottomSheet: Boolean = false,
@@ -59,10 +60,9 @@ class CreateBookViewModel @Inject constructor(
         _uiState.value = CreateBookUiState(
             onTitleChange = { title -> _uiState.value = _uiState.value.copy(title = title) },
             onAuthorChange = { author -> _uiState.value = _uiState.value.copy(author = author) },
-            onImageUrlChange = { imageUrl ->
-                _uiState.value = _uiState.value.copy(imageUrl = imageUrl)
-            },
-            onTopicChange = { topic -> _uiState.value = _uiState.value.copy(topic = topic) }
+            onImageUrlChange = { imageUrl -> _uiState.value = _uiState.value.copy(imageUrl = imageUrl) },
+            onTopicChange = { topic -> _uiState.value = _uiState.value.copy(topic = topic) },
+            onCommentsChange = { comments -> _uiState.value = _uiState.value.copy(comments = comments) }
         )
     }
 

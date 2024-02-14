@@ -1,18 +1,17 @@
 package br.com.firecache.ui.book.createBook
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,9 +26,7 @@ import br.com.firecache.data.models.Book
 import br.com.firecache.ui.components.ModalBottomGenres
 import br.com.firecache.ui.components.RowTextWithIcon
 import br.com.firecache.ui.components.StyledOutlinedTextField
-import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
 @Composable
@@ -37,84 +34,90 @@ fun CreateBookScreen(
     onSaveClick: () -> Unit = {},
     viewModel: CreateBookViewModel = hiltViewModel()
 ) {
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Scaffold {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(
-                space = 16.dp,
-                alignment = Alignment.CenterVertically
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(it)
-                .padding(16.dp)
-        ) {
-            StyledOutlinedTextField(
-                value = uiState.title,
-                onValueChange = uiState.onTitleChange,
-                label = "Título"
-            )
-            StyledOutlinedTextField(
-                value = uiState.author,
-                onValueChange = uiState.onAuthorChange,
-                label = "Autor"
-            )
+    Column(
+        verticalArrangement = Arrangement.spacedBy(
+            space = 16.dp,
+            alignment = Alignment.CenterVertically
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        StyledOutlinedTextField(
+            value = uiState.title,
+            onValueChange = uiState.onTitleChange,
+            label = "Título"
+        )
+        StyledOutlinedTextField(
+            value = uiState.author,
+            onValueChange = uiState.onAuthorChange,
+            label = "Autor"
+        )
 
-            BookImage(imageUrl = uiState.imageUrl, modifier = Modifier.size(200.dp))
+        BookImage(imageUrl = uiState.imageUrl, modifier = Modifier.size(200.dp))
 
-            StyledOutlinedTextField(
-                value = uiState.imageUrl,
-                onValueChange = uiState.onImageUrlChange,
-                label = "URL da imagem"
-            )
-            StyledOutlinedTextField(
-                value = uiState.topic,
-                onValueChange = uiState.onTopicChange,
-                label = "Tópico"
-            )
-            if (uiState.selectedGenre == null) {
-                RowTextWithIcon(text = "Selecione um gênero", icon = Icons.Filled.Add) {
-                    viewModel.toggleBottomSheet()
-                }
-            } else {
-                RowTextWithIcon(
-                    text = "Gênero selecionado: ${uiState.selectedGenre!!.name}",
-                    icon = Icons.Filled.Edit
-                ) {
-                    viewModel.toggleBottomSheet()
-                }
+        StyledOutlinedTextField(
+            value = uiState.imageUrl,
+            onValueChange = uiState.onImageUrlChange,
+            label = "URL da imagem"
+        )
+        StyledOutlinedTextField(
+            value = uiState.topic,
+            onValueChange = uiState.onTopicChange,
+            label = "Tópico"
+        )
+
+        StyledOutlinedTextField(
+            value = uiState.comments,
+            onValueChange = uiState.onCommentsChange,
+            label = "Comentários"
+        )
+
+        if (uiState.selectedGenre == null) {
+            RowTextWithIcon(text = "Selecione um gênero", icon = Icons.Filled.Add) {
+                viewModel.toggleBottomSheet()
             }
+        } else {
+            RowTextWithIcon(
+                text = "Gênero selecionado: ${uiState.selectedGenre!!.name}",
+                icon = Icons.Filled.Edit
+            ) {
+                viewModel.toggleBottomSheet()
+            }
+        }
 
-            if (uiState.isShowGenreBottomSheet) {
-                ModalBottomGenres(
-                    genreList = uiState.genreList,
-                    onDismiss = {
-                        viewModel.toggleBottomSheet()
-                    },
-                    onGenreSelect = { selectedGenre ->
-                        viewModel.selectGenre(selectedGenre)
-                    },
+        if (uiState.isShowGenreBottomSheet) {
+            ModalBottomGenres(
+                genreList = uiState.genreList,
+                onDismiss = {
+                    viewModel.toggleBottomSheet()
+                },
+                onGenreSelect = { selectedGenre ->
+                    viewModel.selectGenre(selectedGenre)
+                },
+            )
+        }
+
+        Button(onClick = {
+            uiState.selectedGenre?.let { notNullGenre ->
+                viewModel.createBook(
+                    Book(
+                        title = uiState.title,
+                        author = uiState.author,
+                        imageUrl = uiState.imageUrl,
+                        topic = uiState.topic,
+                        genreId = notNullGenre.id,
+                        comments = uiState.comments
+                    )
                 )
             }
-
-            Button(onClick = {
-                uiState.selectedGenre?.let { notNullGenre ->
-                    viewModel.createBook(
-                        Book(
-                            title = uiState.title,
-                            author = uiState.author,
-                            imageUrl = uiState.imageUrl,
-                            topic = uiState.topic,
-                            genreId = notNullGenre.id
-                        )
-                    )
-                }
-                onSaveClick()
-            }, modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Adicionar livro")
-            }
+            onSaveClick()
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Adicionar livro")
         }
     }
 }

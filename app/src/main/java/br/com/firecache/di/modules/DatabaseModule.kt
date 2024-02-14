@@ -2,8 +2,8 @@ package br.com.firecache.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import br.com.firecache.data.dao.BookDao
 import br.com.firecache.data.database.AppDatabase
+import br.com.firecache.data.database.MIGRATION_3_4
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,8 @@ class DatabaseModule {
             context,
             AppDatabase::class.java,
             DATABASE_NAME
-        ).build()
+        ).addMigrations(MIGRATION_3_4)
+            .build()
     }
 
 }

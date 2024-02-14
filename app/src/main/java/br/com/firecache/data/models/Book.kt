@@ -21,5 +21,6 @@ data class Book(
     val author: String,
     val imageUrl: String,
     val topic: String,
-    val genreId: String
+    val genreId: String,
+    val comments: String? = null
 )
