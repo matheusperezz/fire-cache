@@ -23,7 +23,7 @@ fun NavGraphBuilder.bookDetailsScreen(navHostController: NavHostController) {
             BookDetailsScreen(
                 bookId = notNullBookId,
                 navHostController = navHostController,
-                onEditClick = { bookId -> navHostController.navigateToAddBook(bookId) }
+                onEditClick = {  }
             )
         }
     }

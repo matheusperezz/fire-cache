@@ -28,18 +28,14 @@ import br.com.firecache.ui.components.RowTextWithIcon
 import br.com.firecache.ui.components.StyledOutlinedTextField
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import kotlinx.coroutines.flow.update
 
 @Composable
 fun CreateBookScreen(
     onSaveClick: () -> Unit = {},
     viewModel: CreateBookViewModel = hiltViewModel(),
-    bookId: String? = null
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    if (bookId != null){
-        viewModel.setBook(bookId)
-    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
@@ -108,11 +104,7 @@ fun CreateBookScreen(
         }
 
         Button(onClick = {
-            if (bookId != null){
-                updateBook(uiState, viewModel)
-            } else {
-                saveBook(uiState, viewModel)
-            }
+            saveBook(uiState, viewModel)
             onSaveClick()
         }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "Adicionar livro")
@@ -136,25 +128,6 @@ private fun saveBook(
             )
         )
     }
-}
-
-private fun updateBook(
-    uiState: CreateBookUiState,
-    viewModel: CreateBookViewModel
-){
-    uiState.selectedGenre?.let { notNullGenre ->
-        viewModel.updateBook(
-            Book(
-                title = uiState.title,
-                author = uiState.author,
-                imageUrl = uiState.imageUrl,
-                topic = uiState.topic,
-                genreId = notNullGenre.id,
-                comments = uiState.comments
-            )
-        )
-    }
-
 }
 
 @Composable

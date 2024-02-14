@@ -14,5 +14,6 @@ fun NavGraphBuilder.bookGraph(navHostController: NavHostController) {
         bookListScreen(navHostController)
         createBookScreen(navHostController)
         bookDetailsScreen(navHostController)
+        updateBookScreen(navHostController)
     }
 }

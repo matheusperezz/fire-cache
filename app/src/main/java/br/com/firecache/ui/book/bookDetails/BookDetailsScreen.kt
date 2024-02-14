@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import br.com.firecache.data.models.Book
+import br.com.firecache.ui.navigation.books.navigateToUpdateBook
 
 @Composable
 fun BookDetailsScreen(
@@ -42,7 +43,7 @@ fun BookDetailsScreen(
             if (isShowingFab) {
                 FloatingActionButton(onClick = {
                     val book = (uiState as BookDetailsUiState.Success).book
-                    onEditClick(book.id)
+                    navHostController.navigateToUpdateBook(book.id)
                 }) {
                     Icon(imageVector = Icons.Default.Edit, contentDescription = null)
                 }

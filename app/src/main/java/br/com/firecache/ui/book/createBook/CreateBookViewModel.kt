@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -87,28 +88,6 @@ class CreateBookViewModel @Inject constructor(
     fun createBook(book: Book) {
         viewModelScope.launch {
             bookRepository.insert(book)
-        }
-    }
-
-    fun setBook(bookId: String) {
-        viewModelScope.launch {
-            val bookFetched = bookRepository.fetchById(bookId).first()
-            bookFetched?.let { book ->
-                val genre = genreRepository.findGenreById(book.genreId).first()
-                _uiState.value = _uiState.value.copy(
-                    title = book.title,
-                    author = book.author,
-                    imageUrl = book.imageUrl,
-                    topic = book.topic,
-                    comments = book.comments ?: "",
-                    selectedGenre = genre,
-                    onTitleChange = { title -> _uiState.value = _uiState.value.copy(title = title) },
-                    onAuthorChange = { author -> _uiState.value = _uiState.value.copy(author = author) },
-                    onImageUrlChange = { imageUrl -> _uiState.value = _uiState.value.copy(imageUrl = imageUrl) },
-                    onTopicChange = { topic -> _uiState.value = _uiState.value.copy(topic = topic) },
-                    onCommentsChange = { comments -> _uiState.value = _uiState.value.copy(comments = comments) }
-                )
-            }
         }
     }
 

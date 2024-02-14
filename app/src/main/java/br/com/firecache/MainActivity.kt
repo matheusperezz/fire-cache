@@ -8,7 +8,7 @@ import br.com.firecache.ui.theme.FireCacheTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /*
-*   TODO: Erro ao carregar a tela de Update, os campos não estao se atualizando
+*   TODO: Verifique |UpdateBookViewModel| para saber como receber o id do livro a ser atualizado
 * */
 
 @AndroidEntryPoint
