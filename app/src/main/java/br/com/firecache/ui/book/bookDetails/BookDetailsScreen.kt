@@ -1,5 +1,6 @@
 package br.com.firecache.ui.book.bookDetails
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,23 +15,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.edit
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import br.com.firecache.USER_KEY
 import br.com.firecache.data.models.Book
+import br.com.firecache.dataStore
 import br.com.firecache.ui.navigation.books.navigateToUpdateBook
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookDetailsScreen(
     onEditClick: (String) -> Unit = {},
     viewModel: BookDetailsViewModel = hiltViewModel(),
+    scope: CoroutineScope = rememberCoroutineScope(),
     navHostController: NavHostController,
     bookId: String,
 ) {
@@ -43,7 +53,10 @@ fun BookDetailsScreen(
             if (isShowingFab) {
                 FloatingActionButton(onClick = {
                     val book = (uiState as BookDetailsUiState.Success).book
-                    navHostController.navigateToUpdateBook(book.id)
+                    scope.launch {
+                        saveUserDataStore(context = navHostController.context, value = book.id)
+                        navHostController.navigateToUpdateBook(book.id)
+                    }
                 }) {
                     Icon(imageVector = Icons.Default.Edit, contentDescription = null)
                 }
@@ -115,5 +128,11 @@ fun BookInfo(
             )
         }
 
+    }
+}
+
+private suspend fun saveUserDataStore(context: Context, value: String){
+    context.dataStore.edit { settings ->
+        settings[USER_KEY] = value
     }
 }

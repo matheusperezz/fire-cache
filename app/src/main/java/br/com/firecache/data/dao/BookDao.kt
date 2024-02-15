@@ -25,5 +25,5 @@ interface BookDao {
     fun fetchById(bookId: String): Flow<Book?>
 
     @Update
-    fun update(book: Book)
+    suspend fun update(book: Book)
 }

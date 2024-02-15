@@ -21,6 +21,7 @@ fun NavGraphBuilder.updateBookScreen(navHostController: NavHostController) {
         bookId?.let {
             UpdateBookScreen(
                 bookId = it,
+                navHostController = navHostController
             )
         }
     }
