@@ -10,7 +10,6 @@ interface BookRepository {
     fun fetchAll(): Flow<List<Book>>
     fun fetchById(bookId: String): Flow<Book?>
     suspend fun insert(book: Book)
-
     suspend fun delete(book: Book)
     suspend fun update(book: Book)
 }

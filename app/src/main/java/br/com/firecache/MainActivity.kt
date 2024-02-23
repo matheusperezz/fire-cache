@@ -8,8 +8,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import br.com.firecache.ui.App
-import br.com.firecache.ui.theme.FireCacheTheme
+import br.com.firecache.presentation.App
+import br.com.firecache.presentation.theme.FireCacheTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /*
