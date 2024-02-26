@@ -2,10 +2,10 @@ package br.com.firecache.presentation.book.createBook
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.models.Book
-import br.com.firecache.data.models.Genre
-import br.com.firecache.data.repositories.BookRepository
-import br.com.firecache.data.repositories.GenreRepository
+import br.com.firecache.domain.entities.Book
+import br.com.firecache.domain.entities.Genre
+import br.com.firecache.domain.usecases.BookUseCase
+import br.com.firecache.domain.usecases.GenreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,8 +33,8 @@ data class CreateBookUiState(
 
 @HiltViewModel
 class CreateBookViewModel @Inject constructor(
-    private val genreRepository: GenreRepository,
-    private val bookRepository: BookRepository
+    private val genreUseCase: GenreUseCase,
+    private val bookUseCase: BookUseCase
 ) :
     ViewModel() {
 
@@ -72,7 +72,7 @@ class CreateBookViewModel @Inject constructor(
 
     private fun fetchGenres() {
         viewModelScope.launch {
-            genreRepository.fetchAllGenres().collect {
+            genreUseCase.fetchAll().collect {
                 _uiState.value = _uiState.value.copy(genreList = it)
             }
         }
@@ -84,13 +84,13 @@ class CreateBookViewModel @Inject constructor(
 
     fun createBook(book: Book) {
         viewModelScope.launch {
-            bookRepository.insert(book)
+            bookUseCase.insert(book)
         }
     }
 
     fun updateBook(book: Book) {
         viewModelScope.launch {
-            bookRepository.update(book)
+            bookUseCase.update(book)
         }
     }
 

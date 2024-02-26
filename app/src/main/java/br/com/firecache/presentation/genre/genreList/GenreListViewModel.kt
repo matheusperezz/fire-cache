@@ -2,8 +2,8 @@ package br.com.firecache.presentation.genre.genreList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.models.Genre
-import br.com.firecache.data.repositories.GenreRepository
+import br.com.firecache.domain.entities.Genre
+import br.com.firecache.domain.usecases.GenreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ sealed class GenreListUiState {
 
 @HiltViewModel
 class GenreListViewModel @Inject constructor(
-    private val genreRepository: GenreRepository
+    private val genreUseCase: GenreUseCase
 ): ViewModel(){
 
     private var currentUiStateJob: Job? = null
@@ -37,7 +37,7 @@ class GenreListViewModel @Inject constructor(
         currentUiStateJob = viewModelScope.launch {
             _uiState.value = GenreListUiState.Loading
             try {
-                genreRepository.fetchAllGenres().collect {
+                genreUseCase.fetchAll().collect {
                     if (it.isEmpty()) {
                         _uiState.value = GenreListUiState.Empty
                     } else {

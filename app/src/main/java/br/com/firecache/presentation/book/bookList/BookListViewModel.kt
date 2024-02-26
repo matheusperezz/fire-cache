@@ -2,9 +2,8 @@ package br.com.firecache.presentation.book.bookList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.models.Book
-import br.com.firecache.data.repositories.BookRepository
-import br.com.firecache.data.repositories.GenreRepository
+import br.com.firecache.domain.entities.Book
+import br.com.firecache.domain.usecases.BookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,8 +19,7 @@ sealed class BookListUiState {
 
 @HiltViewModel
 class BookListViewModel @Inject constructor(
-    private val bookRepository: BookRepository,
-    private val genreRepository: GenreRepository
+    private val bookUseCase: BookUseCase
 ) : ViewModel() {
 
     private var currentUiStateJob: Job? = null
@@ -40,7 +38,7 @@ class BookListViewModel @Inject constructor(
             _uiState.value = BookListUiState.Loading
             try {
                 // Local
-                bookRepository.fetchAll().collect { books ->
+                bookUseCase.fetchAll().collect { books ->
                     if (books.isEmpty()) {
                         _uiState.value = BookListUiState.Empty
                     } else {
@@ -56,7 +54,7 @@ class BookListViewModel @Inject constructor(
 
     fun deleteBook(book: Book) {
         viewModelScope.launch {
-            bookRepository.delete(book)
+            bookUseCase.delete(book)
         }
     }
 }

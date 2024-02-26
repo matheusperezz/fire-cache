@@ -2,8 +2,8 @@ package br.com.firecache.presentation.genre.createGenre
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.models.Genre
-import br.com.firecache.data.repositories.GenreRepository
+import br.com.firecache.domain.entities.Genre
+import br.com.firecache.domain.usecases.GenreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +18,7 @@ data class CreateGenreUiState(
 
 @HiltViewModel
 class CreateGenreViewModel @Inject constructor(
-    private val genreRepository: GenreRepository
+    private val genreUseCase: GenreUseCase
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<CreateGenreUiState> =
@@ -44,7 +44,7 @@ class CreateGenreViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             val genre = Genre(name = name)
-            genreRepository.insert(genre)
+            genreUseCase.insert(genre)
         }
     }
 

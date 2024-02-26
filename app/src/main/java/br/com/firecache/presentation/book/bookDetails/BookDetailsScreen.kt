@@ -28,7 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import br.com.firecache.USER_KEY
-import br.com.firecache.data.models.Book
+import br.com.firecache.domain.entities.Book
 import br.com.firecache.dataStore
 import br.com.firecache.presentation.navigation.books.navigateToUpdateBook
 import kotlinx.coroutines.CoroutineScope

@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.com.firecache.data.models.Genre
+import br.com.firecache.domain.entities.Genre
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

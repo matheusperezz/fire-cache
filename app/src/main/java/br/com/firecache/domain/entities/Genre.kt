@@ -1,4 +1,4 @@
-package br.com.firecache.data.models
+package br.com.firecache.domain.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

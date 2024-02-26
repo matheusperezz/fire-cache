@@ -1,24 +1,17 @@
-package br.com.firecache.data.repositories
+package br.com.firecache.data.datasource
 
 import br.com.firecache.data.dao.BookDao
-import br.com.firecache.data.models.Book
+import br.com.firecache.domain.entities.Book
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
-interface BookRepository {
-    fun fetchAll(): Flow<List<Book>>
-    fun fetchById(bookId: String): Flow<Book?>
-    suspend fun insert(book: Book)
-    suspend fun delete(book: Book)
-    suspend fun update(book: Book)
-}
-
-@Singleton
-class BookRepositoryImpl @Inject constructor(
+class LocalBookDataSourceImpl @Inject constructor(
     private val bookDao: BookDao
-): BookRepository {
-    override fun fetchAll(): Flow<List<Book>> = bookDao.fetchAll()
+): LocalBookDataSource {
+    override fun fetchAll(): Flow<List<Book>> {
+        return bookDao.fetchAll()
+    }
+
     override fun fetchById(bookId: String): Flow<Book?> {
         return bookDao.fetchById(bookId)
     }

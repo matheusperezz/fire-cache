@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import br.com.firecache.data.models.Book
+import br.com.firecache.domain.entities.Book
 import br.com.firecache.presentation.components.StyledOutlinedTextField
 import br.com.firecache.presentation.navigation.FirecacheFab
 

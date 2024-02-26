@@ -1,10 +1,12 @@
 package br.com.firecache.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.firecache.data.models.Book
-import br.com.firecache.data.models.Genre
+import androidx.room.Update
+import br.com.firecache.domain.entities.Book
+import br.com.firecache.domain.entities.Genre
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,4 +23,10 @@ interface GenreDao {
 
     @Insert
     suspend fun insert(genre: Genre)
+
+    @Delete
+    suspend fun delete(genre: Genre)
+
+    @Update
+    suspend fun update(genre: Genre)
 }

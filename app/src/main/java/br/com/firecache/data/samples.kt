@@ -1,6 +1,6 @@
 package br.com.firecache.data
 
-import br.com.firecache.data.models.Book
+import br.com.firecache.domain.entities.Book
 
 val mathBooks = listOf(
     Book(

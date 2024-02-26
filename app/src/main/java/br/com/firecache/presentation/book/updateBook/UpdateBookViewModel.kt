@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.firecache.USER_KEY
-import br.com.firecache.data.models.Book
-import br.com.firecache.data.repositories.BookRepository
+import br.com.firecache.domain.entities.Book
 import br.com.firecache.dataStore
+import br.com.firecache.domain.usecases.BookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ data class UpdateBookUiState(
 @HiltViewModel
 class UpdateBookViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val bookRepository: BookRepository
+    private val bookUseCase: BookUseCase
 ) : ViewModel() {
 
     private val idDataStore = context.dataStore.data.map { preferences ->
@@ -54,7 +54,7 @@ class UpdateBookViewModel @Inject constructor(
 
     fun updateBook() {
         viewModelScope.launch {
-            bookRepository.fetchById(idDataStore.first()).collect { bookCollected ->
+            bookUseCase.fetchById(idDataStore.first()).collect { bookCollected ->
                 bookCollected?.let { book ->
                     val updatedBook = Book(
                         id = book.id,
@@ -65,7 +65,7 @@ class UpdateBookViewModel @Inject constructor(
                         imageUrl = book.imageUrl,
                         topic = book.topic
                     )
-                    bookRepository.update(updatedBook)
+                    bookUseCase.update(updatedBook)
                 }
             }
         }
@@ -73,7 +73,7 @@ class UpdateBookViewModel @Inject constructor(
 
     private fun loadBook(bookId: String) {
         viewModelScope.launch {
-            bookRepository.fetchById(bookId).collect { book ->
+            bookUseCase.fetchById(bookId).collect { book ->
                 book?.let {
                     _uiState.value = _uiState.value.copy(
                         title = book.title,

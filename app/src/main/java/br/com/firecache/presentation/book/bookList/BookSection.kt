@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.firecache.data.mathBooks
-import br.com.firecache.data.models.Book
+import br.com.firecache.domain.entities.Book
 import coil.compose.AsyncImage
 
 @Composable

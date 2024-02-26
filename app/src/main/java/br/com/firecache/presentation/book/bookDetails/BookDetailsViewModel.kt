@@ -2,8 +2,8 @@ package br.com.firecache.presentation.book.bookDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.firecache.data.models.Book
-import br.com.firecache.data.repositories.BookRepository
+import br.com.firecache.domain.entities.Book
+import br.com.firecache.domain.usecases.BookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ sealed class BookDetailsUiState {
 
 @HiltViewModel
 class BookDetailsViewModel @Inject constructor(
-    private val bookRepository: BookRepository
+    private val bookUseCase: BookUseCase
 ) : ViewModel() {
 
     private var currentUiStateJob: Job? = null
@@ -33,7 +33,7 @@ class BookDetailsViewModel @Inject constructor(
         currentUiStateJob?.cancel()
         currentUiStateJob = viewModelScope.launch {
             try {
-                bookRepository.fetchById(bookId).collect { book ->
+                bookUseCase.fetchById(bookId).collect { book ->
                     if (book != null) {
                         _uiState.value = BookDetailsUiState.Success(book)
                     } else {

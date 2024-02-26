@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import br.com.firecache.data.models.Book
+import br.com.firecache.domain.entities.Book
 import kotlinx.coroutines.flow.Flow
 
 @Dao
