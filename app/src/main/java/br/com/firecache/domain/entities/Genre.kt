@@ -8,4 +8,6 @@ import java.util.UUID
 data class Genre(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val name: String
-)
+){
+    constructor(genre: CreateGenre): this(UUID.randomUUID().toString(), genre.name)
+}

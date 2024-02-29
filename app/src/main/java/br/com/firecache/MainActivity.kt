@@ -13,7 +13,7 @@ import br.com.firecache.presentation.theme.FireCacheTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /*
-*   TODO: Verifique |UpdateBookViewModel| para saber como receber o id do livro a ser atualizado
+*   TODO: Tratar erro quando a o servidor estiver off
 * */
 
 // Data Store preferences
