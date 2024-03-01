@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RemoteGenreDataSource {
     fun fetchAll(): Flow<List<Genre>>
-    fun fetchById(id: String): Flow<Genre>
-    suspend fun insert(genre: CreateGenre)
+    fun fetchById(id: String): Flow<Genre?>
+    suspend fun insert(genre: Genre)
 }

@@ -27,4 +27,8 @@ class GenreUseCaseImpl @Inject constructor(
     override suspend fun update(genre: Genre) {
         genreRepository.update(genre)
     }
+
+    override suspend fun syndData() {
+        genreRepository.syndData()
+    }
 }

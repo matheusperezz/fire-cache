@@ -19,5 +19,5 @@ interface GenreService {
     fun fetchGenreById(@Path("id") id: String): Flow<Genre>
 
     @POST(GENRE_RESOURCE)
-    suspend fun saveGenre(@Body genre: CreateGenre)
+    suspend fun saveGenre(@Body genre: Genre)
 }

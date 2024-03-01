@@ -9,4 +9,5 @@ interface GenreUseCase {
     suspend fun insert(genre: Genre)
     suspend fun delete(genre: Genre)
     suspend fun update(genre: Genre)
+    suspend fun syndData()
 }

@@ -7,6 +7,8 @@ import br.com.firecache.domain.entities.Genre
 import br.com.firecache.domain.repository.GenreRepository
 import br.com.firecache.utils.NetworkUtils
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.forEach
 import javax.inject.Inject
 
 class GenreRepositoryImpl @Inject constructor(
@@ -24,11 +26,11 @@ class GenreRepositoryImpl @Inject constructor(
 
     override suspend fun insert(genre: Genre) {
         if (networkUtils.isInternetAvailable()) {
-            remoteGenreDataSource.insert(CreateGenre(genre))
+            remoteGenreDataSource.insert(genre)
             localGenreDataSource.insert(genre)
-            return
+        } else {
+            localGenreDataSource.insert(genre)
         }
-        localGenreDataSource.insert(genre)
     }
 
     override suspend fun delete(genre: Genre) {
@@ -37,6 +39,17 @@ class GenreRepositoryImpl @Inject constructor(
 
     override suspend fun update(genre: Genre) {
         localGenreDataSource.update(genre)
+    }
+
+    override suspend fun syndData() {
+        val localGenres = localGenreDataSource.fetchAll()
+        if (networkUtils.isInternetAvailable()) {
+            localGenres.collect { genreList ->
+                genreList.forEach { genre ->
+                    remoteGenreDataSource.insert(genre)
+                }
+            }
+        }
     }
 
 }

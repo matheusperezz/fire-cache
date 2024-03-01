@@ -29,6 +29,7 @@ class GenreListViewModel @Inject constructor(
     val uiState = _uiState
 
     init {
+        syncData()
         fetchGenres()
     }
 
@@ -47,6 +48,12 @@ class GenreListViewModel @Inject constructor(
             } catch (e: Throwable) {
                 _uiState.value = GenreListUiState.Error(e)
             }
+        }
+    }
+
+    private fun syncData(){
+        viewModelScope.launch {
+            genreUseCase.syndData()
         }
     }
 }

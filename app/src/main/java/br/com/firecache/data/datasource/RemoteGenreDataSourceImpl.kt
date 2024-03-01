@@ -15,11 +15,11 @@ class RemoteGenreDataSourceImpl @Inject constructor(
         return retrofit.create(GenreService::class.java).fetchAllGenres()
     }
 
-    override fun fetchById(id: String): Flow<Genre> {
+    override fun fetchById(id: String): Flow<Genre?> {
         return retrofit.create(GenreService::class.java).fetchGenreById(id)
     }
 
-    override suspend fun insert(genre: CreateGenre) {
+    override suspend fun insert(genre: Genre) {
         retrofit.create(GenreService::class.java).saveGenre(genre)
     }
 
