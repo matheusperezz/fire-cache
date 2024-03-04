@@ -24,10 +24,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.firecache.domain.entities.Book
 import br.com.firecache.presentation.components.ModalBottomGenres
-import br.com.firecache.presentation.components.RowTextWithIcon
-import br.com.firecache.presentation.components.StyledOutlinedTextField
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.example.shared_ui.components.RowTextWithIcon
+import com.example.shared_ui.components.StyledOutlinedTextField
 
 @Composable
 fun CreateBookScreen(

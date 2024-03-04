@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.firecache.domain.entities.Book
-import br.com.firecache.presentation.components.StyledOutlinedTextField
 import br.com.firecache.presentation.navigation.FirecacheFab
+import com.example.shared_ui.components.StyledOutlinedTextField
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

@@ -1,4 +1,4 @@
-package br.com.firecache.presentation.theme
+package com.example.shared_ui.theme
 
 import android.app.Activity
 import android.os.Build

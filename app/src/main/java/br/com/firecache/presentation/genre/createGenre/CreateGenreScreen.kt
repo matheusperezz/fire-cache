@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import br.com.firecache.presentation.components.StyledOutlinedTextField
+import com.example.shared_ui.components.StyledOutlinedTextField
 
 @Composable
 fun CreateGenreScreen(

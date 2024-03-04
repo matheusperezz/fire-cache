@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "FireCache"
 include(":app")
- 
+include(":core-shared-ui")

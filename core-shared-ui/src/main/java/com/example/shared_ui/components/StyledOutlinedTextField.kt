@@ -1,4 +1,4 @@
-package br.com.firecache.presentation.components
+package com.example.shared_ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
